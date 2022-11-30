@@ -1,5 +1,4 @@
 import re
-from typing import Set
 
 
 with open("5words_new.txt") as file:
@@ -11,13 +10,14 @@ GOOD_LETTERS = set()
 
 class Words:
     def __init__(self):
-        self.words = set()
+        self._words = set()
 
+    @property
     def get_words(self):
-        return self.words
+        return self._words
 
-    def set_words(self, words):
-        self.words = words
+    def set_words(self, words: set[str]):
+        self._words = words
 
 
 PERHAPS_WORDS = Words()
@@ -27,8 +27,7 @@ def check_bad_letter(word: str) -> bool:
     for letter in BAD_LETTERS:
         if letter in word:
             return True
-    else:
-        return False
+    return False
 
 
 def check_good_letter(word: str) -> bool:
@@ -38,11 +37,10 @@ def check_good_letter(word: str) -> bool:
             _count += 1
     if _count == len(GOOD_LETTERS):
         return False
-    else:
-        return True
+    return True
 
 
-def find_word(reg_exp: str) -> Set[str]:
+def find_word(reg_exp: str) -> set[str]:
     words = set()
     for word in PERHAPS_WORDS.get_words() if len(PERHAPS_WORDS.get_words()) else WORDS:
         if check_good_letter(word):
@@ -91,7 +89,7 @@ if __name__ == "__main__":
     # буква в верхем регистре - такая буквы есть и стоит на своем месте (А)
     # "о!п!е!р!а!" - в слове нет таких букв как О, П, Е, Р, А
     # "мИд!Ия!" - в слове нету букв Д и Я. Буква М стоит не на своем месте. Буквы И стоят на своем месте
-    for i, result in enumerate(["о!п!ЕРа!", "з!в!ЕРЬ"]):
+    for i, result in enumerate(["оп!е!р!а", "в!ож!Ак"]):
         reg_exp = update_good_and_bad_letters(result)
         words = find_word(reg_exp)
     print(f"Подходит {len(words)} слов(а):")
