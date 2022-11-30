@@ -1,6 +1,5 @@
 import re
 
-
 with open("5words_new.txt") as file:
     WORDS = file.readlines()
 
@@ -83,14 +82,18 @@ def update_good_and_bad_letters(result: str) -> str:
     return f"{reg_exp}$"
 
 
-if __name__ == "__main__":
+def main():
     # ! после буквы - такой буквы в слове нет (а!)
     # буквы в нижнем регистре - такая буква в слове есть, но стоит не на том месте (а)
     # буква в верхем регистре - такая буквы есть и стоит на своем месте (А)
     # "о!п!е!р!а!" - в слове нет таких букв как О, П, Е, Р, А
     # "мИд!Ия!" - в слове нету букв Д и Я. Буква М стоит не на своем месте. Буквы И стоят на своем месте
-    for i, result in enumerate(["оп!е!р!а", "в!ож!Ак"]):
+    for result in ["оп!е!р!а", "в!ож!Ак"]:
         reg_exp = update_good_and_bad_letters(result)
         words = find_word(reg_exp)
     print(f"Подходит {len(words)} слов(а):")
     print(*words, sep="\n")
+
+
+if __name__ == "__main__":
+    main()
