@@ -41,7 +41,7 @@ def check_good_letter(word: str) -> bool:
 
 def find_word(reg_exp: str) -> set[str]:
     words = set()
-    for word in PERHAPS_WORDS.get_words() if len(PERHAPS_WORDS.get_words()) else WORDS:
+    for word in PERHAPS_WORDS.get_words if len(PERHAPS_WORDS.get_words) else WORDS:
         if check_good_letter(word):
             continue
         if check_bad_letter(word):
@@ -49,8 +49,8 @@ def find_word(reg_exp: str) -> set[str]:
         result = re.findall(reg_exp, word)
         if result:
             words.add(result[0])
-    if len(PERHAPS_WORDS.get_words()):
-        PERHAPS_WORDS.set_words(PERHAPS_WORDS.get_words() & words)
+    if len(PERHAPS_WORDS.get_words):
+        PERHAPS_WORDS.set_words(PERHAPS_WORDS.get_words & words)
     else:
         PERHAPS_WORDS.set_words(words)
     return words
@@ -88,7 +88,7 @@ def main():
     # буква в верхем регистре - такая буквы есть и стоит на своем месте (А)
     # "о!п!е!р!а!" - в слове нет таких букв как О, П, Е, Р, А
     # "мИд!Ия!" - в слове нету букв Д и Я. Буква М стоит не на своем месте. Буквы И стоят на своем месте
-    for result in ["оп!е!р!а", "в!ож!Ак"]:
+    for result in ["опе!р!а!", "ПиЛот!"]:
         reg_exp = update_good_and_bad_letters(result)
         words = find_word(reg_exp)
     print(f"Подходит {len(words)} слов(а):")
